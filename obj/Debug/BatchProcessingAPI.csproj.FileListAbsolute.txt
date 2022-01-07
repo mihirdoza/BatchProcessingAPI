@@ -1,0 +1,2 @@
+E:\MO\NetZoom\NZ2020\BatchProcessing\BatchProcessingAPI\obj\Debug\BatchProcessingAPI.csprojAssemblyReference.cache
+E:\MO\NetZoom\NZ2020\BatchProcessing\BatchProcessingAPI\obj\Debug\BatchProcessingAPI.csproj.CoreCompileInputs.cache
