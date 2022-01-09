@@ -10,30 +10,36 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using BatchProcessingFramework.Profiles;
 
 namespace BatchProcessingAPI.Controllers
 {
+    [RoutePrefix("api/batch")]
     public class BatchController : ApiController
     {
+        [HttpGet]
+        [Route("processnodedataset")]
+        public GenericResponse<BatchResponse> ProcessNodeDataSet()
+        {
+            return new GenericResponse<BatchResponse>();
+        }
         [HttpPost]
         [Route("processnodedataset")]
         public GenericResponse<BatchResponse> ProcessNodeDataSet(BaseRequest request)
         {
-            //if (request.profileName == "order")
-            //{
-            //    JsonConvert.DeserializeObject<OrderProfileRequest>(JsonConvert.SerializeObject(request));
-            //}
-            //else
-            //{
-
-            //}
             var returnValue = new GenericResponse<BatchResponse>();
             try
             {
                 var applicationRepository = new ApplicationRepository();
                 if (applicationRepository.IsProfileExists(request.profileName))
                 {
-                    request.profile.ProcessProfile(request);
+                    var baseProfile = new BaseProfile();
+                    baseProfile.ProcessProfile(request);
+                }
+                else
+                {
+                    var invalidProfileName = new Exception("Profilename not found.");
+                    throw invalidProfileName;
                 }
                 returnValue.Data = null;
                 returnValue.HasError = false;
@@ -45,6 +51,7 @@ namespace BatchProcessingAPI.Controllers
             }
             return returnValue;
         }
+
 
     }
 }
