@@ -33,8 +33,16 @@ namespace BatchProcessingAPI.Controllers
                 var applicationRepository = new ApplicationRepository();
                 if (applicationRepository.IsProfileExists(request.profileName))
                 {
-                    var baseProfile = new BaseProfile();
-                    baseProfile.ProcessProfile(request);
+                    if (!string.IsNullOrEmpty(request.DataString))
+                    {
+                        var baseProfile = new BaseProfile();
+                        baseProfile.ProcessProfile(request);
+                    }
+                    else
+                    {
+                        var invalidProfileName = new Exception("Empty JSON string found.");
+                        throw invalidProfileName;
+                    }
                 }
                 else
                 {
